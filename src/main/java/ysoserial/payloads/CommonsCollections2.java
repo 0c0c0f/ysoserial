@@ -44,7 +44,7 @@ public class CommonsCollections2 implements ObjectPayload<Queue<Object>> {
 		Reflections.setFieldValue(transformer, "iMethodName", "newTransformer");
 
 		// switch contents of queue
-		final Object[] queueArray = (Object[]) Reflections.getFieldValue(queue, "queue");
+            final Object[] queueArray = (Object[]) Reflections.getFieldValue(queue, "queue");
 		queueArray[0] = templates;
 		queueArray[1] = 1;
 

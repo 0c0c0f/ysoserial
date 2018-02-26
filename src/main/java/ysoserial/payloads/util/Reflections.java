@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
+import net.sf.json.JSONArray;
 import sun.reflect.ReflectionFactory;
 
 @SuppressWarnings ( "restriction" )
@@ -24,7 +25,7 @@ public class Reflections {
 	}
 
 	public static Object getFieldValue(final Object obj, final String fieldName) throws Exception {
-		final Field field = getField(obj.getClass(), fieldName);		
+		final Field field = getField(obj.getClass(), fieldName);
 		return field.get(obj);
 	}
 
@@ -33,13 +34,13 @@ public class Reflections {
 	    ctor.setAccessible(true);
 	    return ctor;
 	}
-	
+
 
     public static <T> T createWithoutConstructor ( Class<T> classToInstantiate )
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         return createWithConstructor(classToInstantiate, Object.class, new Class[0], new Object[0]);
     }
-    
+
     @SuppressWarnings ( {"unchecked"} )
     public static <T> T createWithConstructor ( Class<T> classToInstantiate, Class<? super T> constructorClass, Class<?>[] consArgTypes, Object[] consArgs )
             throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -48,6 +49,15 @@ public class Reflections {
         Constructor<?> sc = ReflectionFactory.getReflectionFactory().newConstructorForSerialization(classToInstantiate, objCons);
         sc.setAccessible(true);
         return (T)sc.newInstance(consArgs);
+    }
+
+    public static void setSuperFieldValue(final Object obj, final String fieldName, final Object value) throws Exception{
+        final Field field = getField(obj.getClass().getSuperclass().getSuperclass().getSuperclass(), fieldName);
+        field.set(obj, value);
+    }
+    public static void setSuperFieldValue1(final Object obj,  final String fieldName, final Object value) throws Exception{
+        final Field field = getField(obj.getClass().getSuperclass(), fieldName);
+        field.set(obj, value);
     }
 
 }
